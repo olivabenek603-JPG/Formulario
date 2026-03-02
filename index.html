@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Creador de CV</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Generador de Curriculum Vitae</h1>
+
+        <form id="cvForm">
+            <h2>Información Personal</h2>
+            <input type="text" id="nombre" placeholder="Nombre completo" required>
+            <input type="email" id="email" placeholder="Correo electrónico" required>
+            <input type="text" id="telefono" placeholder="Teléfono" required>
+            <textarea id="perfil" placeholder="Perfil profesional"></textarea>
+
+            <h2>Experiencia Laboral</h2>
+            <textarea id="experiencia" placeholder="Describe tu experiencia laboral"></textarea>
+
+            <h2>Educación</h2>
+            <textarea id="educacion" placeholder="Describe tu formación académica"></textarea>
+
+            <h2>Habilidades</h2>
+            <textarea id="habilidades" placeholder="Tus habilidades principales"></textarea>
+
+            <button type="button" onclick="generarPDF()">Descargar CV en PDF</button>
+        </form>
+    </div>
+
+    <!-- Librería jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
