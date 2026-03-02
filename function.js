@@ -1,55 +1,69 @@
-async function generarPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+const inputs = document.querySelectorAll("input, textarea");
 
-    const nombre = document.getElementById("nombre").value;
-    const email = document.getElementById("email").value;
-    const telefono = document.getElementById("telefono").value;
-    const perfil = document.getElementById("perfil").value;
-    const experiencia = document.getElementById("experiencia").value;
-    const educacion = document.getElementById("educacion").value;
-    const habilidades = document.getElementById("habilidades").value;
+inputs.forEach(input => {
+    input.addEventListener("input", actualizarPreview);
+});
 
-    let y = 20;
+document.getElementById("foto").addEventListener("change", function() {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        document.getElementById("previewFoto").src = e.target.result;
+    };
+    if (this.files[0]) {
+        reader.readAsDataURL(this.files[0]);
+    }
+});
 
-    doc.setFont("helvetica", "bold");
-    doc.setFontSize(18);
-    doc.text(nombre, 20, y);
+function actualizarPreview() {
+    document.getElementById("previewNombre").innerText =
+        document.getElementById("nombre").value || "Tu Nombre";
 
-    y += 10;
-    doc.setFont("helvetica", "normal");
-    doc.setFontSize(12);
-    doc.text(`Email: ${email}`, 20, y);
-    y += 7;
-    doc.text(`Teléfono: ${telefono}`, 20, y);
+    document.getElementById("previewProfesion").innerText =
+        document.getElementById("profesion").value || "Tu Profesión";
 
-    y += 15;
-    doc.setFont("helvetica", "bold");
-    doc.text("Perfil Profesional", 20, y);
-    y += 7;
-    doc.setFont("helvetica", "normal");
-    doc.text(doc.splitTextToSize(perfil, 170), 20, y);
+    document.getElementById("previewEmail").innerText =
+        document.getElementById("email").value;
 
-    y += 20;
-    doc.setFont("helvetica", "bold");
-    doc.text("Experiencia Laboral", 20, y);
-    y += 7;
-    doc.setFont("helvetica", "normal");
-    doc.text(doc.splitTextToSize(experiencia, 170), 20, y);
+    document.getElementById("previewTelefono").innerText =
+        document.getElementById("telefono").value;
 
-    y += 30;
-    doc.setFont("helvetica", "bold");
-    doc.text("Educación", 20, y);
-    y += 7;
-    doc.setFont("helvetica", "normal");
-    doc.text(doc.splitTextToSize(educacion, 170), 20, y);
+    document.getElementById("previewPerfil").innerText =
+        document.getElementById("perfil").value;
 
-    y += 30;
-    doc.setFont("helvetica", "bold");
-    doc.text("Habilidades", 20, y);
-    y += 7;
-    doc.setFont("helvetica", "normal");
-    doc.text(doc.splitTextToSize(habilidades, 170), 20, y);
+    document.getElementById("previewExperiencia").innerText =
+        document.getElementById("experiencia").value;
 
-    doc.save("Curriculum_Vitae.pdf");
+    document.getElementById("previewEducacion").innerText =
+        document.getElementById("educacion").value;
+
+    const habilidades = document.getElementById("habilidades").value.split(",");
+    const lista = document.getElementById("previewHabilidades");
+    lista.innerHTML = "";
+
+    habilidades.forEach(h => {
+        if (h.trim() !== "") {
+            const li = document.createElement("li");
+            li.innerText = h.trim();
+            lista.appendChild(li);
+        }
+    });
+}
+
+function generarPDF() {
+    const element = document.getElementById("cvPreview");
+
+    if (!element) {
+        alert("No se encontró el CV para generar el PDF.");
+        return;
+    }
+
+    const opciones = {
+        margin: 0,
+        filename: 'CV_Creativo.pdf',
+        image: { type: 'jpeg', quality: 1 },
+        html2canvas: { scale: 2, useCORS: true },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opciones).from(element).save();
 }
