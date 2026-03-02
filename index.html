@@ -2,38 +2,43 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Creador de CV</title>
+    <title>CV Creativo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Estilos -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-    <div class="container">
-        <h1>Generador de Curriculum Vitae</h1>
+<div class="main-container">
 
-        <form id="cvForm">
-            <h2>Información Personal</h2>
-            <input type="text" id="nombre" placeholder="Nombre completo" required>
-            <input type="email" id="email" placeholder="Correo electrónico" required>
-            <input type="text" id="telefono" placeholder="Teléfono" required>
-            <textarea id="perfil" placeholder="Perfil profesional"></textarea>
+    <!-- FORMULARIO -->
+    <div class="form-container">
+        <h1>✨ Creador de CV Creativo</h1>
 
-            <h2>Experiencia Laboral</h2>
-            <textarea id="experiencia" placeholder="Describe tu experiencia laboral"></textarea>
+        <input type="text" id="nombre" placeholder="Nombre completo">
+        <input type="text" id="profesion" placeholder="Profesión">
+        <input type="email" id="email" placeholder="Correo electrónico">
+        <input type="text" id="telefono" placeholder="Teléfono">
 
-            <h2>Educación</h2>
-            <textarea id="educacion" placeholder="Describe tu formación académica"></textarea>
+        <textarea id="perfil" placeholder="Perfil profesional"></textarea>
+        <textarea id="experiencia" placeholder="Experiencia laboral"></textarea>
+        <textarea id="educacion" placeholder="Educación"></textarea>
+        <textarea id="habilidades" placeholder="Habilidades (separadas por coma)"></textarea>
 
-            <h2>Habilidades</h2>
-            <textarea id="habilidades" placeholder="Tus habilidades principales"></textarea>
-
-            <button type="button" onclick="generarPDF()">Descargar PDF</button>
-        </form>
+        <!-- IMPORTANTE: type="button" -->
+        <button type="button" onclick="generarPDF()">
+            Descargar PDF
+        </button>
     </div>
 
-    <!-- Librería jsPDF -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script src="script.js"></script>
+</div>
+
+<!-- Librería jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Tu script -->
+<script src="script.js"></script>
 
 </body>
-
 </html>
