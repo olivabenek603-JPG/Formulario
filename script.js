@@ -1,69 +1,78 @@
-const inputs = document.querySelectorAll("input, textarea");
-
-inputs.forEach(input => {
-    input.addEventListener("input", actualizarPreview);
-});
-
-document.getElementById("foto").addEventListener("change", function() {
-    const reader = new FileReader();
-    reader.onload = function(e) {
-        document.getElementById("previewFoto").src = e.target.result;
-    };
-    if (this.files[0]) {
-        reader.readAsDataURL(this.files[0]);
-    }
-});
-
-function actualizarPreview() {
-    document.getElementById("previewNombre").innerText =
-        document.getElementById("nombre").value || "Tu Nombre";
-
-    document.getElementById("previewProfesion").innerText =
-        document.getElementById("profesion").value || "Tu Profesión";
-
-    document.getElementById("previewEmail").innerText =
-        document.getElementById("email").value;
-
-    document.getElementById("previewTelefono").innerText =
-        document.getElementById("telefono").value;
-
-    document.getElementById("previewPerfil").innerText =
-        document.getElementById("perfil").value;
-
-    document.getElementById("previewExperiencia").innerText =
-        document.getElementById("experiencia").value;
-
-    document.getElementById("previewEducacion").innerText =
-        document.getElementById("educacion").value;
-
-    const habilidades = document.getElementById("habilidades").value.split(",");
-    const lista = document.getElementById("previewHabilidades");
-    lista.innerHTML = "";
-
-    habilidades.forEach(h => {
-        if (h.trim() !== "") {
-            const li = document.createElement("li");
-            li.innerText = h.trim();
-            lista.appendChild(li);
-        }
-    });
-}
+// Activar jsPDF correctamente
+window.jsPDF = window.jspdf.jsPDF;
 
 function generarPDF() {
-    const element = document.getElementById("cvPreview");
 
-    if (!element) {
-        alert("No se encontró el CV para generar el PDF.");
-        return;
+    const doc = new jsPDF();
+
+    // Obtener valores
+    const nombre = document.getElementById("nombre").value || "Tu Nombre";
+    const profesion = document.getElementById("profesion").value || "Tu Profesión";
+    const email = document.getElementById("email").value || "";
+    const telefono = document.getElementById("telefono").value || "";
+    const perfil = document.getElementById("perfil").value || "";
+    const experiencia = document.getElementById("experiencia").value || "";
+    const educacion = document.getElementById("educacion").value || "";
+    const habilidades = document.getElementById("habilidades").value || "";
+
+    let y = 20;
+
+    // ===== NOMBRE =====
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(22);
+    doc.text(nombre, 20, y);
+
+    y += 10;
+
+    // ===== PROFESIÓN =====
+    doc.setFontSize(14);
+    doc.setFont("helvetica", "normal");
+    doc.text(profesion, 20, y);
+
+    y += 15;
+
+    // ===== CONTACTO =====
+    doc.setFont("helvetica", "bold");
+    doc.setFontSize(14);
+    doc.text("Contacto", 20, y);
+
+    y += 8;
+    doc.setFont("helvetica", "normal");
+    doc.setFontSize(12);
+    doc.text(`Email: ${email}`, 20, y);
+    y += 7;
+    doc.text(`Teléfono: ${telefono}`, 20, y);
+
+    y += 15;
+
+    // Función para agregar secciones con salto automático
+    function agregarSeccion(titulo, contenido) {
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(14);
+        doc.text(titulo, 20, y);
+        y += 8;
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(12);
+
+        const texto = doc.splitTextToSize(contenido, 170);
+        doc.text(texto, 20, y);
+
+        y += texto.length * 7 + 10;
+
+        // Si se pasa de la página, crear nueva
+        if (y > 270) {
+            doc.addPage();
+            y = 20;
+        }
     }
 
-    const opciones = {
-        margin: 0,
-        filename: 'CV_Creativo.pdf',
-        image: { type: 'jpeg', quality: 1 },
-        html2canvas: { scale: 2, useCORS: true },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-    };
+    // ===== SECCIONES =====
+    agregarSeccion("Perfil Profesional", perfil);
+    agregarSeccion("Experiencia Laboral", experiencia);
+    agregarSeccion("Educación", educacion);
+    agregarSeccion("Habilidades", habilidades);
 
-    html2pdf().set(opciones).from(element).save();
+    // Descargar PDF
+    doc.save("CV.pdf");
 }
