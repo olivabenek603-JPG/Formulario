@@ -1,58 +1,90 @@
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #4e73df, #1cc88a);
+    margin: 0;
+    /* Usamos una fuente más moderna y limpia */
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     display: flex;
     justify-content: center;
-    padding: 30px;
+    align-items: center;
+    min-height: 100vh; /* Asegura que siempre esté centrado verticalmente */
+    padding: 20px;
 }
 
 .container {
     background: white;
-    padding: 30px;
-    border-radius: 12px;
-    width: 600px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    width: 100%;
+    max-width: 500px; /* Más amigable para móviles */
+    padding: 40px;
+    border-radius: 20px; /* Bordes más suaves */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+}
+
+/* Un pequeño efecto de flotado al entrar */
+.container:hover {
+    transform: translateY(-5px);
 }
 
 h1 {
     text-align: center;
-    margin-bottom: 20px;
-    color: #3b3b3b;
+    color: #2d3748; /* Un tono casi negro es más legible y elegante */
+    margin-bottom: 30px;
+    font-weight: 700;
 }
 
-h2 {
-    margin-top: 20px;
-    color: #1cc88a;
+/* Estilo para las etiquetas (labels) si las usas */
+label {
+    display: block;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #4a5568;
 }
 
 input, textarea {
     width: 100%;
-    padding: 10px;
+    padding: 12px 15px;
     margin-top: 8px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    font-size: 14px;
+    border-radius: 10px;
+    border: 2px solid #edf2f7; /* Borde más sutil */
+    font-size: 16px; /* Evita el zoom automático en iOS */
+    box-sizing: border-box; /* Crucial para que el padding no rompa el ancho */
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+/* Efecto de enfoque (Focus) */
+input:focus, textarea:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
 }
 
 textarea {
-    resize: vertical;
-    min-height: 80px;
+    min-height: 120px;
+    resize: none; /* Se ve más limpio si no se puede estirar manualmente */
 }
 
 button {
+    margin-top: 30px;
     width: 100%;
-    margin-top: 20px;
-    padding: 12px;
-    background: #4e73df;
-    border: none;
+    padding: 15px;
+    background: linear-gradient(to right, #667eea, #764ba2); /* Degradado en el botón */
     color: white;
+    border: none;
+    border-radius: 12px;
     font-size: 16px;
-    border-radius: 8px;
+    font-weight: 600;
     cursor: pointer;
-    transition: 0.3s;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(118, 75, 162, 0.3);
 }
 
 button:hover {
-    background: #2e59d9;
+    transform: scale(1.02);
+    filter: brightness(1.1);
+    box-shadow: 0 6px 20px rgba(118, 75, 162, 0.4);
 }
 
+button:active {
+    transform: scale(0.98);
+}
